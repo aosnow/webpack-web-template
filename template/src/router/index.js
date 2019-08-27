@@ -17,13 +17,13 @@ Vue.use(Router);
 const routesConfig = [
   { path: '', redirect: '/index' },
   { path: '/', redirect: '/index' },
-  { path: 'index', component: FrameIndex }
+  { path: '/index', component: FrameIndex }
 ];
 
 // 创建路由实例
 const router = new Router({
   // mode: 'history',
-  // base: config.basePath,
+  base: config.basePath,
   routes: routesConfig
 });
 

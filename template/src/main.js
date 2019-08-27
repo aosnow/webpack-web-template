@@ -27,7 +27,7 @@ import App from './App.vue';
 
 Vue.config.productionTip = false;
 Vue.use(YinheUI);
-console.log('vue:', Vue);
+
 import(/* webpackChunkName: "config" */ './config')
 .then(config => {
 
@@ -40,21 +40,13 @@ import(/* webpackChunkName: "config" */ './config')
   Vue.http.batchUseInterceptor(interceptors);
 
   // 初始化 storage
+  const storage = new Storage.Store({ unique, config: StorageConfig });
   Vue.use(Storage);
-  console.log('loaded!');
+
   new Vue({
     router,
     store,
-    storage: new Storage.Store({ unique, config: StorageConfig }),
-    data() {
-      return {
-        a: 10
-      };
-    },
-    beforeCreate: function() {
-      // `this` 指向 vm 实例
-      console.log('a is: ' + this.a);
-    },
+    storage,
     render: h => h(App)
   }).$mount('#app');
 });

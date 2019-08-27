@@ -102,6 +102,18 @@ const webpackConfig = {
       }
     });
 
+    // 注入 html 参数，通过 'htmlWebpackPlugin.options.title' 方式调用
+    // 警告：多页应用 pages 与 config.optimization.splitChunks 不能共存（存在chunk不能正确加载的bug#webpack v4.39）
+    config.plugin('html').tap(htmlOptions => {
+      return [Object.assign(
+        {},
+        htmlOptions[0],
+        {
+          title: 'vue 模板项目 - mudas'
+        }
+      )];
+    });
+
     // 新插件
     config.plugin('manifest').use(ManifestPlugin);
     config.plugin('happy-pack').use(
