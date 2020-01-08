@@ -7,8 +7,7 @@
 <script>
 export default {
   name: 'YhButton',
-  props: {
-  }
+  props: {}
 };
 </script>
 

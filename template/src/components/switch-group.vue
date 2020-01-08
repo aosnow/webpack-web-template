@@ -5,24 +5,25 @@
 ---------------------------------------------------->
 
 <template>
-  <div class="specified-scope">
+  <div class="switch-group">
     <h2>content:</h2>
-    <el-switch
-      v-model="value1"
-      active-text="按月付费"
-      inactive-text="按年付费">
+    <el-switch v-model="value1"
+               active-text="按月付费"
+               inactive-text="按年付费">
     </el-switch>
-    <el-switch
-      style="display: block"
-      v-model="value2"
-      active-color="#13ce66"
-      inactive-color="#ff4949"
-      active-text="按月付费"
-      inactive-text="按年付费">
+    <el-switch style="display: block"
+               v-model="value2"
+               active-color="#13ce66"
+               inactive-color="#ff4949"
+               active-text="按月付费"
+               inactive-text="按年付费">
     </el-switch>
 
-    <h2>slot.default:</h2>
-    <slot></slot>
+    <div class="switch-group__slot">
+      <h2>slot.default:</h2>
+      <slot class="switch-group__slot--body"></slot>
+    </div>
+
   </div>
 </template>
 
@@ -38,6 +39,15 @@ export default {
 };
 </script>
 
-<style>
-.specified-scope{}
+<style lang="scss">
+@import "~@/css/common/var";
+
+.switch-group {
+
+  .switch-group__slot {
+    border: $--border-base;
+    padding: $--padding-base;
+    margin: $--margin-base;
+  }
+}
 </style>

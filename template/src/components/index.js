@@ -4,7 +4,6 @@
 // created: 2019/6/26 21:04
 // ------------------------------------------------------------------------------
 
-import { trim, repeat } from './string';
 import SwitchGroup from './switch-group';
 
-export { trim, repeat, SwitchGroup };
+export { SwitchGroup };

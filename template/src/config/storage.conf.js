@@ -5,8 +5,8 @@
 // ------------------------------------------------------------------------------
 
 import { StorageType } from '@mudas/storage';
-import * as Types from '@/store/types/action';
+import * as Types from '@/store/types';
 
 export default [
-  { type: Types.LOGIN, storage: StorageType.cookie, expire: 1800 }
+  { type: Types.USER_LOGIN, storage: StorageType.cookie, expire: 0 }
 ];

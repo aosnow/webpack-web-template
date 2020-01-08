@@ -1,0 +1,73 @@
+// ------------------------------------------------------------------------------
+// name: main
+// author: mudas( mschool.tech )
+// created: 2019/11/11
+// ------------------------------------------------------------------------------
+@import "./mixin/mixins";
+
+html {
+  // 375 以下
+  @include media(xss) {
+    font-size: $--html-font-size * .875;
+  }
+
+  // 375
+  @include media(xs) {
+    font-size: $--html-font-size;
+  }
+
+  // 768
+  @include media(sm) {
+    font-size: $--html-font-size;
+  }
+
+  // 1024
+  @include media(md) {
+    font-size: $--html-font-size;
+  }
+
+  // 1280
+  @include media(lg) {
+    font-size: $--html-font-size * 1.125;
+  }
+
+  // 1920
+  @include media(xl) {
+    font-size: $--html-font-size * 1.25;
+  }
+}
+
+body {
+  color: $--color-text-primary;
+  font-family: $--body-font-family;
+  font-size: $--font-size-base;
+  background-color: $--background-color-base;
+  line-height: 1;
+
+  // 字体渲染抗锯齿，只对 MacOS 的 webkit、moz 有效，Windows 系统无区别
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  outline: none;
+}
+
+a, .a {
+  color: $--link-color;
+  text-decoration: none;
+
+  &:active {
+    background-color: $--link-active-color;
+  }
+
+  &:hover {
+    color: $--link-hover-color;
+  }
+}
+
+code, .code {
+  font-family: $--code-font-family;
+  font-size: $--code-font-size;
+}

@@ -15,9 +15,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json', '.scss'],
     alias: {
       '@': resolve('src'),
-      modules: resolve('src', 'modules'),
-      'yinhe-ui': resolve('packages', 'yinhe-ui'),
-      '@mudas/affair': resolve('packages', 'affair')
+      views: resolve('src', 'views'),
+      'yinhe-ui': resolve('packages', 'yinhe-ui')
     }
   }
 };

@@ -1,0 +1,195 @@
+// default Theme Variables
+// ----------------------------------------
+
+$--assets-path: '~@/assets';
+
+// Transition
+// ----------------------------------------
+$--all-transition: all .3s cubic-bezier(.645, .045, .355, 1) !default;
+$--fade-transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) !default;
+$--fade-linear-transition: opacity 200ms linear !default;
+$--md-fade-transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) !default;
+$--border-transition-base: border-color .2s cubic-bezier(.645, .045, .355, 1) !default;
+$--color-transition-base: color .2s cubic-bezier(.645, .045, .355, 1) !default;
+
+// Color
+// ----------------------------------------
+/// Black & White
+$--color-white: #ffffff !default;
+$--color-black: #000000 !default;
+
+/// BrandColor
+$--color-primary: #fb6703 !default;
+$--color-success: #67d480 !default;
+$--color-warning: #f5bf5e !default;
+$--color-danger: #ee794f !default;
+$--color-info: #dddddd !default;
+
+// NeutralColor
+$--color-neutral-1: #303133 !default;
+$--color-neutral-2: #606266 !default;
+$--color-neutral-3: #909399 !default;
+$--color-neutral-4: #c0c4cc !default;
+$--color-neutral-5: #dcdfe6 !default;
+$--color-neutral-6: #e4e7ed !default;
+$--color-neutral-7: #ebeef5 !default;
+$--color-neutral-8: #f2f6fc !default;
+
+/// Text
+$--color-text-primary: $--color-neutral-1 !default;
+$--color-text-regular: $--color-neutral-2 !default;
+$--color-text-secondary: $--color-neutral-3 !default;
+$--color-text-placeholder: $--color-neutral-4 !default;
+
+/// Border
+$--border-color-base: $--color-neutral-5 !default;
+$--border-color-light: $--color-neutral-6 !default;
+$--border-color-lighter: $--color-neutral-7 !default;
+$--border-color-extra-light: $--color-neutral-8 !default;
+
+// Typography - 排版
+// ----------------------------------------
+$--font-size-extra-large: .2rem !default;
+$--font-size-large: .18rem !default;
+$--font-size-medium: .16rem !default;
+$--font-size-base: .14rem !default;
+$--font-size-small: .12rem !default;
+$--font-size-extra-small: .10rem !default; // 仅移动端使用（PC端将强制成最小12px字号）
+
+$--font-weight-primary: 500 !default;
+$--font-weight-secondary: 100 !default;
+
+$--font-line-height-primary: 1.6 !default;
+$--font-line-height-secondary: 1.25 !default;
+$--font-color-disabled-base: #bbbbbb !default;
+
+// Margin
+// ----------------------------------------
+$--margin-small: .1rem !default;
+$--margin-base: .2rem !default;
+$--margin-large: .4rem !default;
+
+// Padding
+// ----------------------------------------
+$--padding-small: .1rem !default;
+$--padding-base: .2rem !default;
+$--padding-large: .4rem !default;
+
+// z-index
+// ----------------------------------------
+$--index-normal: 1 !default;
+$--index-top: 1000 !default;
+$--index-popper: 2000 !default;
+
+// Background
+// ----------------------------------------
+/// BackgroundColor
+$--background-color-base: #f8f8f8 !default;
+$--background-color-light: mix($--color-white, $--background-color-base, 58%);
+
+// Priority for mobile environment
+// ----------------------------------------
+/// HTML
+$--html-font-size: 100px !default;
+
+/// BODY
+$--body-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !default;
+
+// Header
+// ----------------------------------------
+$--header-padding: 0 $--padding-base !default;
+
+// Main
+// ----------------------------------------
+$--main-padding: $--padding-base !default;
+
+// Section
+// ----------------------------------------
+$--section-padding: $--padding-base !default;
+
+// Footer
+// ----------------------------------------
+$--footer-padding: 0 $--padding-base !default;
+
+// Code
+// ----------------------------------------
+$--code-font-family: Courier New, Mono sans-serif;
+$--code-font-size: $--font-size-base !default;
+$--code-color: $--color-text-regular !default;
+
+// Link
+// ----------------------------------------
+$--link-color: mix($--color-black, $--color-primary, 27%) !default;
+$--link-hover-color: $--color-primary !default;
+$--link-active-color: $--border-color-lighter !default; // mobile backgroundColor
+
+// Border
+// ----------------------------------------
+$--border-width-base: .01rem !default;
+$--border-style-base: solid !default;
+$--border-color-hover: $--color-text-placeholder !default;
+$--border-base: $--border-width-base $--border-style-base $--border-color-base !default;
+$--border-radius-base: .04rem !default;
+$--border-radius-small: .02rem !default;
+$--border-radius-circle: 100% !default;
+
+// Box-shadow
+$--box-shadow-base: 0 .02rem .04rem rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04) !default;
+$--box-shadow-dark: 0 .02rem .04rem rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12) !default;
+$--box-shadow-light: 0 .02rem .06rem 0 rgba(0, 0, 0, 0.06) !default;
+
+// Card
+// ----------------------------------------
+$--card-title-height: .4rem !default;
+
+// Scrollbar
+// ----------------------------------------
+$--scrollbar-thumb-width: 4px !default;
+$--scrollbar-track-background: rgba($--color-black, .01) !default;
+$--scrollbar-background-color: rgba($--color-text-secondary, .3) !default;
+$--scrollbar-hover-background-color: mix($--color-white, $--color-primary, 20%) !default;
+
+// PageHeader
+// ----------------------------------------
+$--page-header-margin: $--main-padding !default;
+
+// Responsive breakpoints
+// ----------------------------------------
+/// xsmall  超小型 375px以上（移动设备竖屏）
+$--xs: 375px !default;
+/// small  小型 768px（移动设备横屏）
+$--sm: 768px !default;
+/// normal 正常（默认） 1024px（旧式纯屏电脑、收银机等）
+$--md: 1024px !default;
+/// large  大型 1280px、1440px、1600px（主流液晶屏）
+$--lg: 1280px !default;
+/// huge  1920px 高清1080P（大型游戏液晶屏）
+$--xl: 1920px !default;
+
+/// Breakpoints Map
+$--breakpoints: (
+  'xss' : (max-width: $--xs - 1), // 极小型
+  'xs' : (min-width: $--xs), // 手机竖屏
+  'sm' : (min-width: $--sm),
+  'md' : (min-width: $--md),
+  'lg' : (min-width: $--lg),
+  'xl' : (min-width: $--xl)
+);
+
+/// Display Breakpoints Map
+$--breakpoints-spec: (
+  'xss-only' : (max-width: $--xs - 1), /// 当视口在 xss 尺寸时隐藏
+  'xs-and-up' : (min-width: $--xs), /// 当视口在 xs 及以上尺寸时隐藏
+  'xs-only': "(min-width: #{$--xs}) and (max-width: #{$--sm - 1})", /// 当视口在 xs 尺寸时隐藏
+  'xs-and-down': (max-width: $--sm - 1), /// 当视口在 xs 及以下尺寸时隐藏
+  'sm-and-up' : (min-width: $--sm), /// 当视口在 sm 及以上尺寸时隐藏
+  'sm-only': "(min-width: #{$--sm}) and (max-width: #{$--md - 1})", /// 当视口在 sm 尺寸时隐藏
+  'sm-and-down': (max-width: $--md - 1), /// 当视口在 sm 及以下尺寸时隐藏
+  'md-and-up' : (min-width: $--md), /// 当视口在 md 及以上尺寸时隐藏
+  'md-only': "(min-width: #{$--md}) and (max-width: #{$--lg - 1})", /// 当视口在 md 尺寸时隐藏
+  'md-and-down': (max-width: $--lg - 1), /// 当视口在 md 及以下尺寸时隐藏
+  'lg-and-up' : (min-width: $--lg), /// 当视口在 lg 及以上尺寸时隐藏
+  'lg-only': "(min-width: #{$--lg}) and (max-width: #{$--xl - 1})", /// 当视口在 lg 尺寸时隐藏
+  'lg-and-down': (max-width: $--xl - 1), /// 当视口在 lg 及以下尺寸时隐藏
+  'xl-only' : (min-width: $--xl), /// 当视口在 xl 尺寸时隐藏
+);

@@ -1,4 +1,5 @@
-lib
-dist
-types
-public
+/dist/
+/public/
+/tests/
+/types/
+/*.js

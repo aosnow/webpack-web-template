@@ -6,9 +6,6 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
-
-import FrameIndex from 'modules/frame';
-
 import config from '@/config/path.env';
 
 Vue.use(Router);
@@ -17,7 +14,7 @@ Vue.use(Router);
 const routesConfig = [
   { path: '', redirect: '/index' },
   { path: '/', redirect: '/index' },
-  { path: '/index', component: FrameIndex }
+  { path: '/index', component: () => import('views/frame') }
 ];
 
 // 创建路由实例

@@ -1,12 +1,8 @@
 module.exports = {
   presets: [
-    ['@vue/app', {
-      polyfills: [
-        'es6.promise',
-        'es6.symbol'
-      ]
-    }]
+    '@vue/cli-plugin-babel/preset'
   ],
-  // 很重要，保障 dist/xxx.common.js 测试时正确引用内部单元
-  include: /(src|packages)/i
+  plugins: [
+    ['component', { libraryName: 'element-ui', styleLibraryName: 'theme-chalk' }]
+  ]
 };

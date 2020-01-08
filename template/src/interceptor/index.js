@@ -5,10 +5,15 @@
 // ------------------------------------------------------------------------------
 
 import Response from './response';
-import TokenHeader from './token';
+import Token from './token';
+import transformRequest from './transformRequest';
 import transformResponse from './transformResponse';
 
 // 所有需要注册的拦截器列表
-const interceptors = [TokenHeader, Response];
+const interceptors = {
+  // key 值需要与 config/index.js 中的 http 配置数组一一对应
+  // 引用方法 vue.http.post() 或者 vue.http.default.post()
+  '{{name}}': [Token, Response]
+};
 
-export { interceptors, transformResponse };
+export { interceptors, transformRequest, transformResponse };

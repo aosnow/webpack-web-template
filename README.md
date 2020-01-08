@@ -1,6 +1,6 @@
 # webpack-web-template
 
-> 基于 vue-cli3 架构的 web 项目模板，包含 http、storage、cache 等，以及 report 构建分析等。
+> 基于 vue-cli4 架构的 web 项目模板，包含 http、storage、cache 等，以及 report 构建分析等。
 
 ### Usage	
 

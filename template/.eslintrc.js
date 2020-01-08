@@ -1,18 +1,27 @@
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
-  root: true,
-  parserOptions: { parser: 'babel-eslint' },
   env: {
     browser: true,
     commonjs: true,
     es6: true
+  },
+  parserOptions: {
+    parser: 'babel-eslint'
   },
   // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
   // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
   extends: ['plugin:vue/essential', '@vue/airbnb'],
   // required to lint *.vue files
   plugins: ['vue'],
+  // check if imports actually resolve
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.config.js'
+      }
+    }
+  },
   // add your custom rules here
   rules: {
     // don't require .vue extension when importing
@@ -85,7 +94,7 @@ module.exports = {
       'asyncArrow': 'always'
     }],
     // 是否允许使用 console 语句
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'off', // process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 箭头函数的函数体样式：是否需要｛｝包含
     'arrow-body-style': 'off',
     // 箭头函数的参数表是否需要括号包起来
@@ -112,6 +121,7 @@ module.exports = {
 
     // syntax
     // ---------------------------------------------------------------------------
+    'no-undef': 'off',
     'no-else-return': 'off',
     'guard-for-in': 'off',
     'no-lonely-if': 'off',
