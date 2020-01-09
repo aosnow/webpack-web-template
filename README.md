@@ -4,7 +4,7 @@
 
 ### Usage	
 
-This is a project template for [@vue/cli 3](https://cli.vuejs.org/zh/guide/).
+This is a project template for [@vue/cli 4](https://cli.vuejs.org/zh/guide/).
 
 ``` bash
 $ npm install -g @vue/cli
