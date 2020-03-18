@@ -13,6 +13,7 @@ import transformResponse from './transformResponse';
 const interceptors = {
   // key 值需要与 config/index.js 中的 http 配置数组一一对应
   // 引用方法 vue.http.post() 或者 vue.http.default.post()
+  /* eslint-disable */
   '{{name}}': [Token, Response]
 };
 
