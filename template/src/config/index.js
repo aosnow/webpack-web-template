@@ -42,7 +42,7 @@ module.exports = {
        * 当局域网环境时，将通过 vue-cli 中的 proxyTable 配置来识别 '/api' 进行跨域
        * 当服务器环境时，通过如 ngix 配置来识别 '/api' 进行跨域
        */
-      baseURL: process.env.VUE_APP_API_DEFAULT,
+      baseURL: '/api',
 
       /**
        * `timeout` 指定请求超时的毫秒数(0 表示无超时时间)
