@@ -7,4 +7,5 @@
 // Modules Name
 // 用于各方的统一命名
 
-export const LOGIN = 'loginInfo';
+// 用户模块
+export const USER = 'user';

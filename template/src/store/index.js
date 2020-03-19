@@ -6,14 +6,15 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as Module from './types/module';
 
-// import LoginInfo from './user/login';
+import User from './user';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
-    // loginInfo: LoginInfo
+    [Module.USER]: User
   }
 });
 

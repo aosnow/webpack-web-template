@@ -5,6 +5,10 @@
 // ------------------------------------------------------------------------------
 
 import Vue from 'vue';
+import * as Types from '@/store/types';
+
+const USER_LOGIN = Types.USER_LOGIN.namespace;
+const USER_LOGINOUT = Types.USER_LOGINOUT.namespace;
 
 const State = {
   /*
@@ -14,7 +18,11 @@ const State = {
    "token": "string"
    }
    */
-  loginfo: null,
+  loginfo: null
+};
+
+const Getters = {
+  [USER_LOGIN]: state => state.loginfo
 };
 
 // 同步立即更新
@@ -24,24 +32,16 @@ const MutAtions = {
    * @param state
    * @param {LoginInfo} loginfo
    */
-  setLogInfo(state, loginfo) {
-    // loginfo
+  [USER_LOGIN](state, loginfo) {
     state.loginfo = loginfo;
-
-    // 设置 Ajax 请求时所需要的 token
-    Vue.token = loginfo.token;
   },
 
   // 退出登录
-  setLogout(state) {
+  [USER_LOGINOUT](state) {
     // loginfo
     state.loginfo = null;
-    // userinfo
-    state.userinfo = null;
-    // token
-    Vue.token = null;
     // 缓存销毁
-    Vue.storage.remove(Types.LOGIN);
+    Vue.storage.remove(Types.USER_LOGIN);
   }
 
 };
@@ -50,61 +50,28 @@ const MutAtions = {
 const Actions = {
 
   // Step01：登录
-  login({ commit }, params) {
-    return this.dispatch(
-      this.interceptor,
-      {
-        type: Types.LOGIN,
-        handler() {
-          const url = uri({ getway: ApiConf.user.$getway, api: ApiConf.user.login });
-          return Vue.http.post(url, params).then(({ data }) => {
-            // if (data.code === StatusCode.SUCCESS) {
-            // 检测 token 有效性
-            if (data.data && data.data.token) {
-              return Promise.resolve(data);
-            }
-            // }
-            // return Promise.reject(new Error(data['sub_msg'] || data.msg));
-          }).catch(reason => {
-            return Promise.reject(reason);
-          });
-        },
-        success(data) {
-          commit('setLogInfo', data.data);
-        },
-        error(reason) {
-          console.warn('error:', reason);
-        }
+  [USER_LOGIN](context, params) {
+    return Vue.http.post('url', params).then(({ data }) => {
+      // 登录成功
+      if (data.data.token) {
+        context.commit(USER_LOGIN, data.data);
+        return Promise.resolve(data.data);
       }
-    );
+      // 登录失败
+      return Promise.reject(new Error(data['sub_msg'] || data.msg));
+    }).catch(reason => Promise.reject(reason));
   },
 
   // Step Last：登出
-  logout({ commit }) {
-    const url = uri({ getway: ApiConf.user.$getway, api: ApiConf.user.loginOut });
-    return Vue.http.post(url, {}).then(({ data }) => {
-      if (data.code === StatusCode.SUCCESS) {
-        commit('setLogout');
-        return Promise.resolve(data);
-      }
-      else {
-        return Promise.reject(new Error(data['sub_msg'] || data.msg));
-      }
-    }).catch(reason => {
-      return Promise.reject(reason);
-    });
+  [USER_LOGINOUT](context) {
+    return Vue.http.post('url').then(({ data }) => {
+      context.commit(USER_LOGINOUT);
+      return Promise.resolve(data.data);
+    }).catch(reason => Promise.reject(reason));
   }
 };
 
-const Getters = {
-  loginfo: state => state.loginfo,
-  userinfo: state => state.userinfo,
-  token: state => state.loginfo ? state.loginfo.token : null;
-}
-
 export default {
-  namespaced: true,
-  strict: true,
   state: State,
   getters: Getters,
   mutations: MutAtions,

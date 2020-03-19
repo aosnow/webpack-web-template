@@ -9,4 +9,5 @@ import * as Module from './module';
 // --------------------------------------------------------------------------
 // 用户信息
 // --------------------------------------------------------------------------
-export const USER_LOGIN = `${Module.LOGIN}/userLogin`; // 用户信息
+export const USER_LOGIN = `${Module.USER}/login`; // 用户信息
+export const USER_LOGINOUT = `${Module.USER}/login-out`; // 用户退出登录
