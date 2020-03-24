@@ -23,7 +23,8 @@ export function mergeStore(modules, options = Object.create(null)) {
   };
 
   modules.forEach(mod => {
-    store.state = { ...store.state, ...mod.state };
+    const states = typeof mod.state === 'function' ? mod.state() : mod.state;
+    store.state = { ...store.state, ...states };
     store.getters = { ...store.getters, ...mod.getters };
     store.mutations = { ...store.mutations, ...mod.mutations };
     store.actions = { ...store.actions, ...mod.actions };
