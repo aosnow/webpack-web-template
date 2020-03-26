@@ -13,5 +13,6 @@ module.exports = {
    * basePath 应指定为类似 '/sub-name/' 的子级目录名
    * 注意：请在修改完成后，重新构建打包应用程序
    */
-  basePath: DEBUG ? './' : process.env.BASE_URL
+  basePath: DEBUG ? './' : process.env.BASE_URL,
+  publicPath: DEBUG ? './' : process.env.VUE_APP_PUBLICPATH
 };

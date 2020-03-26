@@ -19,7 +19,7 @@ function resolve(...dir) {
 
 // 配置集合
 const webpackConfig = {
-  publicPath: config.basePath,
+  publicPath: config.publicPath,
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: DEBUG,
@@ -64,26 +64,26 @@ const webpackConfig = {
           }]);
 
     // config.optimization.runtimeChunk('single'); // 该设置与多页 pages 与 preload 冲突造成空白页
-    config.optimization.splitChunks({
-      cacheGroups: {
-        // 将 node_modules 中的包分离出来做长久缓存，加快每次发布的加载速度
-        // vendors: {
-        //   name: `chunk-vendors`,
-        //   test: /[\\/]node_modules[\\/]/,
-        //   minChunks: 2,
-        //   // maxSize: 102400, // 该设置与多页 pages 与 preload 冲突造成空白页
-        //   priority: -10,
-        //   chunks: 'initial'
-        // },
-        common: {
-          name: `chunk-common`,
-          minChunks: 2,
-          priority: -20,
-          chunks: 'all',
-          reuseExistingChunk: true
-        }
-      }
-    });
+    // config.optimization.splitChunks({
+    //   cacheGroups: {
+    //     // 将 node_modules 中的包分离出来做长久缓存，加快每次发布的加载速度
+    //     // vendors: {
+    //     //   name: `chunk-vendors`,
+    //     //   test: /[\\/]node_modules[\\/]/,
+    //     //   minChunks: 2,
+    //     //   // maxSize: 102400, // 该设置与多页 pages 与 preload 冲突造成空白页
+    //     //   priority: -10,
+    //     //   chunks: 'initial'
+    //     // },
+    //     common: {
+    //       name: `chunk-common`,
+    //       minChunks: 2,
+    //       priority: -20,
+    //       chunks: 'all',
+    //       reuseExistingChunk: true
+    //     }
+    //   }
+    // });
 
     // 按需打包 moment 语言包
     config.plugin('moment')
