@@ -11,7 +11,7 @@ import * as utils from '@mudas/filters';
 // Vue 全局过滤器
 // ----------------------------------------
 Vue.filter('currency', utils.currency);
-Vue.filter('dateformat', utils.dateNormalize);
+Vue.filter('dateformat', utils.dateformat);
 Vue.filter('timestr', utils.timestr);
 Vue.filter('distance', utils.distance);
 
