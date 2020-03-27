@@ -16,15 +16,10 @@
       "label": "Author",
 	  "default": "mudas"
     },
-    "license": {
-      "type": "string",
-      "label": "License",
-      "default": "MIT"
-    },
-	"version": {
+    "version": {
       "type": "string",
       "required": true,
-      "label": "Project name",
+      "label": "Project version",
       "default": "0.0.1"
     }
   },

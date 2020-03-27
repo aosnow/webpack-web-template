@@ -3,7 +3,7 @@
   "version": "{{ version }}",
   "description": "{{ description }}",
   "author": "{{ author }}",
-  "license": "{{ license }}",
+  "private": true,
   "homepage": "",
   "repository": {
     "type": "git",
