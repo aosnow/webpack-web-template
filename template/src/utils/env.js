@@ -4,6 +4,8 @@
 // created: 2019/11/26 20:23
 // ------------------------------------------------------------------------------
 
+import Query from 'query-string';
+
 /**
  * 硬件和应用环境检测
  * @return {Object}
@@ -108,4 +110,18 @@ export function parsingUserAgentEnv() {
   result.unknow = !result.koubei && !result.alipay && !result.ding && !result.wechat && !result.qbrowser;
 
   return result;
+}
+
+/**
+ * 检测收集 url 参数集合
+ * @return {Object}
+ */
+export function parsingURLParams() {
+  const href = window.location.href;
+
+  if (href.indexOf('?') !== -1) {
+    return Query.parse(href.slice(href.indexOf('?') + 1));
+  }
+
+  return Object.create(null);
 }

@@ -38,7 +38,7 @@ export function mergeStore(modules, options = Object.create(null)) {
  * @param state store.state.item
  * @param data 需要保存的数据体
  */
-export function incrementalSave(state, data) {
+export function incremental(state, data) {
   Object.keys(data).forEach(key => {
     if (state[key]) {
       state[key] = data[key];
