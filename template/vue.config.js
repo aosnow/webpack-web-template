@@ -17,6 +17,10 @@ function resolve(...dir) {
   return path.join(__dirname, ...dir);
 }
 
+// externals 排除列表
+const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter' };
+// if (process.env.VUE_APP_ENV === 'production') externals.packageName = 'exportPackageName';
+
 // 配置集合
 const webpackConfig = {
   publicPath: config.publicPath,
@@ -39,8 +43,20 @@ const webpackConfig = {
 
   configureWebpack: {
     // 启动程序入口（若需要配置多个html页程序，使用 pages 进行替换）
-    entry: resolve('src', 'entry', 'main.js')
+    entry: resolve('src', 'entry', 'main.js'),
+
+    // 排除外部库以及不需要打包的 node_modules 第三方包（如使用CDN或引用本地JS库）
+    externals: DEBUG ? '' : externals
   },
+
+  // 配置单页为 pages 启动错误无法解析 public/index.html
+  // pages: {
+  //   index: {
+  //     title: '商家便利宝',
+  //     entry: 'src/entry/main.js',
+  //     filename: 'main.html'
+  //   }
+  // },
 
   chainWebpack: (config) => {
 
