@@ -38,13 +38,30 @@ export function mergeStore(modules, options = Object.create(null)) {
  * @param state store.state.item
  * @param data 需要保存的数据体
  */
-export function incremental(state, data) {
-  Object.keys(data).forEach(key => {
-    if (state[key]) {
-      state[key] = data[key];
-    }
-    else {
-      Vue.set(state, key, data[key]);
-    }
-  });
+export function increment(state, data) {
+  _merge(state, data);
+}
+
+/**
+ * 对指定 holder 进行属性递归赋值
+ * @param holder
+ * @param source
+ * @private
+ */
+function _merge(holder, source) {
+  if (typeof source === 'object') {
+    Object.keys(source).forEach(key => {
+      if (holder[key]) {
+        _merge(holder[key], source[key]);
+      }
+      else {
+        // 不存在的属性，直接赋值
+        Vue.set(holder, key, source[key]);
+      }
+    });
+  }
+  else {
+    // 数组、值类型直接赋值
+    holder = source;
+  }
 }
