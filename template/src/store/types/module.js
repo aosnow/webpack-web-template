@@ -7,5 +7,8 @@
 // Modules Name
 // 用于各方的统一命名
 
+// 环境信息模块
+export const ENV = 'env';
+
 // 用户模块
 export const USER = 'user';

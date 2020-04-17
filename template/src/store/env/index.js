@@ -1,12 +1,12 @@
 // ------------------------------------------------------------------------------
 // name: index
 // author: mudas( mschool.tech )
-// created: 2020/3/19 13:53
+// created: 2020/3/30 16:50
 // ------------------------------------------------------------------------------
 
 import * as utils from '@mudas/util-store';
-import LoginInfo from './login';
+import EnvInfo from './env-info';
 
 export default utils.mergeStore([
-  LoginInfo
+  EnvInfo
 ]);

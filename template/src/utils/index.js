@@ -4,5 +4,4 @@
 // created: 2020.03.11 下午 20:04
 // ------------------------------------------------------------------------------
 
-export * from './store';
-export * from './env';
+export * from '@mudas/util-store';
