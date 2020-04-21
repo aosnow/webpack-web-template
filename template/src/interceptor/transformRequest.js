@@ -7,7 +7,8 @@
 import {
   isFormData,
   isArrayBuffer,
-  isBuffer, isStream,
+  isBuffer,
+  isStream,
   isFile,
   isBlob,
   isObject,
