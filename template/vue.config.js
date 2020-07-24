@@ -18,8 +18,8 @@ function resolve(...dir) {
 }
 
 // externals 排除列表
-const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter' };
-// if (process.env.VUE_APP_ENV === 'release') externals.packageName = 'exportPackageName';
+const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter', moment: 'moment' };
+if (process.env.VUE_APP_ENV === 'release') externals.vconsole = 'VConsole';
 
 // 配置集合
 const webpackConfig = {
@@ -46,7 +46,7 @@ const webpackConfig = {
     entry: resolve('src', 'entry', 'main.js'),
 
     // 排除外部库以及不需要打包的 node_modules 第三方包（如使用CDN或引用本地JS库）
-    externals
+    externals: DEBUG ? '' : externals
   },
 
   // 配置单页为 pages 启动错误无法解析 public/index.html
@@ -57,6 +57,12 @@ const webpackConfig = {
   //     filename: 'main.html'
   //   }
   // },
+
+  // 默认情况下 babel-loader 会忽略所有 node_modules 中的文件
+  // 此处列出 node_modules 中同样需要让 babel 转译的 esm 模块
+  transpileDependencies: [
+    '@mudas/*'
+  ],
 
   chainWebpack: (config) => {
 
@@ -100,15 +106,6 @@ const webpackConfig = {
     //     }
     //   }
     // });
-
-    // 按需打包 moment 语言包
-    config.plugin('moment')
-          .use(
-            new webpack.ContextReplacementPlugin(
-              /moment[\\\/]locale$/,
-              /^\.\/(zh-cn|es-us)$/
-            )
-          );
 
   }
 };

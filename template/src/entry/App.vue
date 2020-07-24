@@ -12,7 +12,7 @@
 <script>
 import Vue from 'vue';
 import * as Types from '@/store/types';
-import { parsingUserAgentEnv, parsingURLParams } from '@mudas/env';
+import { parsingURLParams } from '@mudas/env';
 
 export default {
   data() {
@@ -30,7 +30,7 @@ export default {
     // 保障在其它页面刷新也能保留环境级的参数信息
     parsingParams() {
       // 分析和存储环境参数
-      const envInfo = { query: { ...parsingURLParams() }, env: { ...parsingUserAgentEnv() } };
+      const envInfo = { query: { ...parsingURLParams() }, env: { ...Vue.env } };
 
       // 缓存环境参数
       this.$store.commit(Types.ENV_INFO, envInfo);

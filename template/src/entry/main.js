@@ -3,6 +3,7 @@ import EasyHttp from '@mudas/http';
 import Storage from '@mudas/storage';
 import StorageConfig from '@/config/storage.conf';
 import { interceptors, transformRequest, transformResponse } from '@/interceptor';
+import { parsingUserAgentEnv } from '@mudas/env';
 
 // ----------------------------------------
 // 基本环境配置
@@ -35,6 +36,9 @@ Promise.all([
 
   // 项目配置信息
   Vue.conf = modules[0];
+
+  // 运行环境信息
+  Vue.env = parsingUserAgentEnv();
 
   // UI 框架
   Vue.use(modules[1].default);
