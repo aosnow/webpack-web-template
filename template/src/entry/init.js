@@ -5,15 +5,15 @@
 // ------------------------------------------------------------------------------
 
 import Vue from 'vue';
-import * as utils from '@mudas/filters';
+import * as filters from '@mudas/filters';
 
 // ----------------------------------------
 // Vue 全局过滤器
 // ----------------------------------------
-Vue.filter('currency', utils.currency);
-Vue.filter('dateformat', utils.dateformat);
-Vue.filter('timestr', utils.timestr);
-Vue.filter('distance', utils.distance);
+Vue.filter('currency', filters.currency);
+Vue.filter('dateformat', filters.dateformat);
+Vue.filter('timestr', filters.timestr);
+Vue.filter('distance', filters.distance);
 
 // ----------------------------------------
 // Vue 全局参数设置

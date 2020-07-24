@@ -7,8 +7,8 @@
 const path = require('path');
 const os = require('os');
 const webpack = require('webpack');
-
 const TerserPlugin = require('terser-webpack-plugin');
+
 const terserOptions = require('@vue/cli-service/lib/config/terserOptions');
 const config = require('./src/config/path.env');
 const DEBUG = process.env.NODE_ENV === 'development';
@@ -19,7 +19,7 @@ function resolve(...dir) {
 
 // externals 排除列表
 const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter', moment: 'moment' };
-if (process.env.VUE_APP_ENV === 'release') externals.vconsole = 'VConsole';
+// if (process.env.VUE_APP_ENV === 'release') externals.packageName = 'exportPackageName';
 
 // 配置集合
 const webpackConfig = {
@@ -86,26 +86,39 @@ const webpackConfig = {
           }]);
 
     // config.optimization.runtimeChunk('single'); // 该设置与多页 pages 与 preload 冲突造成空白页
-    // config.optimization.splitChunks({
-    //   cacheGroups: {
-    //     // 将 node_modules 中的包分离出来做长久缓存，加快每次发布的加载速度
-    //     // vendors: {
-    //     //   name: `chunk-vendors`,
-    //     //   test: /[\\/]node_modules[\\/]/,
-    //     //   minChunks: 2,
-    //     //   // maxSize: 102400, // 该设置与多页 pages 与 preload 冲突造成空白页
-    //     //   priority: -10,
-    //     //   chunks: 'initial'
-    //     // },
-    //     common: {
-    //       name: `chunk-common`,
-    //       minChunks: 2,
-    //       priority: -20,
-    //       chunks: 'all',
-    //       reuseExistingChunk: true
-    //     }
-    //   }
-    // });
+    config.optimization.splitChunks({
+      chunks: 'initial',
+      minSize: 20480,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 5,
+      automaticNameDelimiter: '-',
+      name: true,
+
+      cacheGroups: {
+        // 基础包：分离 node_modules 中的 core-js|lodash-es
+        lib: {
+          test: /[\\/]node_modules[\\/](core-js|lodash-es)/,
+          priority: -10
+        },
+        // 内部包：分离 node_modules 中的 core-js|lodash-es
+        com: {
+          test: /[\\/]node_modules[\\/](@mudas\/*|axios)/,
+          priority: -10
+        },
+        // 其它 node_modules 包
+        vendors: {
+          test: /[\\/]node_modules[\\/](?!core-js|lodash-es|@mudas\/*|axios)/,
+          priority: -40
+        },
+        // 业务包，按常规引用规则拆分，达到2个引用则独立成包
+        default: {
+          minChunks: 2,
+          priority: -50,
+          reuseExistingChunk: true
+        }
+      }
+    });
 
   }
 };
