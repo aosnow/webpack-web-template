@@ -6,6 +6,7 @@
 
 import Vue from 'vue';
 import * as filters from '@mudas/filters';
+import * as utils from '@/utils';
 
 // ----------------------------------------
 // Vue 全局过滤器
@@ -20,6 +21,12 @@ Vue.filter('distance', filters.distance);
 // ----------------------------------------
 Vue.config.performance = true;
 Vue.config.productionTip = process.env.NODE_ENV === 'development';
+
+// ----------------------------------------
+// 其它兼容设置（主要解决对未安装库的容错处理）
+// ----------------------------------------
+// @mudas/plugin-vue-handler 全局事件插件
+Vue.emit = utils.noop;
 
 // ----------------------------------------
 // STORE 设置（确保在 Vuex.Store 创建前设置生效）

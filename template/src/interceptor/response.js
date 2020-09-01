@@ -14,31 +14,41 @@ export default {
   type: 'response',
 
   interceptor: response => {
-    // 只处理数据逻辑，此处默认都是正确数据（因为此处实际已进入 then 进程，要想在 then 前拦截需要使用 transformResponse）
-    // const { data } = response;
-    // const { msg, sub_msg } = data;
-    // const code = parseInt(data.code, 10);
-    // let transmit = true; // 是否需要向下继续传递 response
-    //
-    // if (StatusCode.has(code) && code !== StatusCode.SUCCESS) {
-    //   const message = sub_msg || msg || 'unknow error';
-    //
-    //   if (code === StatusCode.NOSESSION || code === StatusCode.TOCKEN_INVALID) {
-    //     // 取消token过期，未登录提示弹窗多次出现
-    //     Vue.http.cancel(`【${data.code}】请求已取消（${message}）`);
-    //   }
-    //
-    //   // 弹出提示信息
-    //   // Vue.toast({ icon: 'warning-o', message: msg, closeOnClick: true, forbidClick: true });
-    //   transmit = false;
-    //   throw new ServiceError(message, code);
-    //
-    // }
-    // else {
-    //   transmit = true;
-    // }
-    //
-    // if (transmit) return response;
+    const { data: axiosResponseData, status, statusText } = response;
+
+    if (status !== 200) {
+      throw new ServiceError(statusText, status);
+    }
+
+    // 接口返回处理
+    else {
+      axiosResponseData.code = parseInt(axiosResponseData.code, 10);
+
+      const { code, msg, sub_msg, data: content } = axiosResponseData;
+      const message = sub_msg || msg || 'unknow error';
+      let extraMessage = '';
+
+      if (code !== StatusCode.SUCCESS) {
+        // 若是 40005 服务端代码执行错误，则增加详细参数
+        if (content) {
+          const { message: msg, path } = content;
+          extraMessage = `\n【path】${path}\n【message】${msg}`;
+        }
+
+        // 登录失效逻辑处理
+        if (code === StatusCode.NOSESSION || code === StatusCode.TOCKEN_INVALID) {
+          // 取消token过期，未登录提示弹窗多次出现
+          Vue.http.cancel(`【${code}】请求已取消（${message}）${extraMessage}`);
+
+          // 登录失效，派发全局事件（需要安装 @mudas/plugin-vue-handler 才能生效）
+          Vue.emit(StatusCode.NOSESSION, axiosResponseData);
+        }
+
+        // 转发给 reponse.error 进行处理
+        throw new ServiceError(`${message}${extraMessage}`, code);
+      }
+    }
+
     return response;
   },
 

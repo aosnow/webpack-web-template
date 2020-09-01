@@ -5,6 +5,8 @@ import StorageConfig from '@/config/storage.conf';
 import { interceptors, transformRequest, transformResponse } from '@/interceptor';
 import { parsingUserAgentEnv } from '@mudas/env';
 
+import Handler from '@mudas/plugin-vue-handler';
+
 // ----------------------------------------
 // 基本环境配置
 // ----------------------------------------
@@ -38,11 +40,10 @@ Promise.all([
   Vue.conf = modules[0];
 
   // 运行环境信息
-  Vue.env = parsingUserAgentEnv();
+  Vue.env = Vue.prototype.$env = parsingUserAgentEnv();
 
   // UI 框架
-  Vue.use(modules[1].default);
-  Vue.use(modules[2].default);
+  // element-ui 和 yinhe-ui 已在加载的同时进行注册
 
   // 初始化 http
   const { http } = Vue.conf;
@@ -56,6 +57,9 @@ Promise.all([
   Object.keys(interceptors).forEach(key => {
     Vue.http[key].batchUseInterceptor(interceptors[key]);
   });
+
+  // Vue 全局事件监听插件
+  Vue.use(Handler);
 
   // 初始化 storage
   const storage = new Storage.Store({ unique: process.env.VUE_APP_UNIQUE, config: StorageConfig });

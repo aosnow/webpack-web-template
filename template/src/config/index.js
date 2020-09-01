@@ -31,9 +31,15 @@ module.exports = {
   // 相应的本地需要通过 webpack.proxy 来设置代理访问，服务端需要设置 nginx 反向代理来实现
   http: [
     {
+      /**
+       * http 配置项名称
+       * 与 interceptor/index.js 中 interceptors 一一对应
+       */
       id: '{{name}}',
 
-      // 平台识别编码
+      /**
+       * 平台识别编码
+       */
       invoke_source: 0,
 
       /**
@@ -42,7 +48,7 @@ module.exports = {
        * 当局域网环境时，将通过 vue-cli 中的 proxyTable 配置来识别 '/api' 进行跨域
        * 当服务器环境时，通过如 ngix 配置来识别 '/api' 进行跨域
        */
-      baseURL: '/api',
+      baseURL: process.env.VUE_APP_API_MEMBER,
 
       /**
        * `timeout` 指定请求超时的毫秒数(0 表示无超时时间)
