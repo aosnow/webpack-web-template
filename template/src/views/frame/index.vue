@@ -5,40 +5,62 @@
 ---------------------------------------------------->
 
 <template>
-  <div class="homepage">
-    <h2>示例主页：</h2>
-    <yh-button>
-      <img src="~@/assets/logo.png" alt="none" width="30" height="30">
-      {{content}}
-      <img :src="ImgLogo" alt="none" width="30" height="30">
-    </yh-button>
+  <div class="homepage" v-loading.fullscreen="loading">
+    <header>示例主页：</header>
+    <el-button type="primary" icon="el-icon-search" @click="iconClickHandler">图标按钮</el-button>
+
+    <el-button @click="imgClickHandler">
+      <img src="~@/assets/logo.png" alt="none" width="12" height="12">
+      <span v-text="content"/>
+      <img :src="ImgLogo" alt="none" width="12" height="12">
+    </el-button>
 
     <switch-group>
       switch-group 的包含内容：
-      <div class="homepage__logo"></div>
+      <div class="homepage__logo"/>
     </switch-group>
 
   </div>
 </template>
 
 <script>
-import { SwitchGroup } from '@/components';
 import ImgLogo from '@/assets/logo.png';
 
 export default {
   name: 'index',
-  components: { SwitchGroup },
   data() {
     return {
-      content: 'Template page: index.vue',
+      loading: false,
+      content: '图片按钮',
       ImgLogo
     };
+  },
+
+  methods: {
+    iconClickHandler() {
+      this.loading = true;
+
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    },
+
+    imgClickHandler() {
+      const h = this.$createElement;
+      this.$message({
+        message: h('div', null, [
+          h('el-button', { attrs: { type: 'primary' } }, 'create button'),
+          h('span', null, '内容可以是 '),
+          h('i', { style: 'color: teal' }, 'VNode')
+        ])
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss">
-@import "~@/css/common/var";
+@import "~@/css/var";
 
 .homepage {
   padding: $--padding-base;

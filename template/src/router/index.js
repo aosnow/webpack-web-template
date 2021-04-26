@@ -14,7 +14,7 @@ Vue.use(Router);
 const routesConfig = [
   { path: '', redirect: '/index' },
   { path: '/', redirect: '/index' },
-  { path: '/index', component: () => import('views/frame'), meta: { title: '测试首页', cache: false } }
+  { path: '/index', component: () => import('views/frame'), meta: { title: '测试首页' } }
 ];
 
 // 创建路由实例
@@ -22,6 +22,15 @@ const router = new Router({
   // mode: 'history',
   base: config.basePath,
   routes: routesConfig
+});
+
+// 自动根据 meta.title 设置页面标题
+router.beforeEach((to, from, next) => {
+  // 设置页面标题
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
 });
 
 export default router;

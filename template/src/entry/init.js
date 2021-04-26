@@ -5,16 +5,10 @@
 // ------------------------------------------------------------------------------
 
 import Vue from 'vue';
-import * as filters from '@mudas/filters';
-import * as utils from '@/utils';
-
-// ----------------------------------------
-// Vue 全局过滤器
-// ----------------------------------------
-Vue.filter('currency', filters.currency);
-Vue.filter('dateformat', filters.dateformat);
-Vue.filter('timestr', filters.timestr);
-Vue.filter('distance', filters.distance);
+import Handler from '@mudas/plugin-vue-handler';
+import { parsingUserAgent } from '@mudas/env';
+import Http from '@/http';
+import Filter from '@/filter';
 
 // ----------------------------------------
 // Vue 全局参数设置
@@ -23,19 +17,21 @@ Vue.config.performance = true;
 Vue.config.productionTip = process.env.NODE_ENV === 'development';
 
 // ----------------------------------------
-// 其它兼容设置（主要解决对未安装库的容错处理）
+// 运行环境信息
 // ----------------------------------------
-// @mudas/plugin-vue-handler 全局事件插件
-Vue.emit = utils.noop;
+Vue.env = Vue.prototype.$env = {}; // parsingUserAgent(); // 移动端环境信息在PC端无意义，待 @mudas/env 增加PC端环境检测功能
 
 // ----------------------------------------
-// STORE 设置（确保在 Vuex.Store 创建前设置生效）
+// Vue 全局过滤器（依赖 Vue.conf）
 // ----------------------------------------
-// 让 store 内部能快速定位如 module/name 中的 name
-// 因为开启了 module.namespace 模式，只需要在内部使用最后的 name
-/* eslint-disable */
-if (!String.prototype.namespace) {
-  String.prototype.__defineGetter__('namespace', function() {
-    return this.substring(this.lastIndexOf('/') + 1);
-  });
-}
+Vue.use(Filter);
+
+// ----------------------------------------
+// 初始化 http
+// ----------------------------------------
+Vue.use(Http);
+
+// ----------------------------------------
+// Vue 全局事件监听插件
+// ----------------------------------------
+Vue.use(Handler);

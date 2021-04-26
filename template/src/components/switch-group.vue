@@ -6,21 +6,24 @@
 
 <template>
   <div class="switch-group">
-    <h2>content:</h2>
-    <el-switch v-model="value1"
-               active-text="按月付费"
-               inactive-text="按年付费">
-    </el-switch>
-    <el-switch style="display: block"
-               v-model="value2"
-               active-color="#13ce66"
-               inactive-color="#ff4949"
-               active-text="按月付费"
-               inactive-text="按年付费">
-    </el-switch>
+    <header>content:</header>
+
+    <el-form>
+      <el-form-item>
+        <el-switch v-model="value1" active-text="按月付费" inactive-text="按年付费"/>
+      </el-form-item>
+
+      <el-form-item>
+        <el-switch v-model="value2"
+                   active-color="#13ce66"
+                   inactive-color="#ff4949"
+                   active-text="按月付费"
+                   inactive-text="按年付费"/>
+      </el-form-item>
+    </el-form>
 
     <div class="switch-group__slot">
-      <h2>slot.default:</h2>
+      <header>slot.default:</header>
       <slot class="switch-group__slot--body"></slot>
     </div>
 
@@ -32,7 +35,7 @@ export default {
   name: 'switch-group',
   data() {
     return {
-      value1: true,
+      value1: false,
       value2: true
     };
   }
@@ -40,11 +43,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/css/common/var";
+@import "~@/css/var";
 
 .switch-group {
 
-  .switch-group__slot {
+  &__slot {
     border: $--border-base;
     padding: $--padding-base;
     margin: $--margin-base;

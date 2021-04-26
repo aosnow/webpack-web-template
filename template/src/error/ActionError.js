@@ -4,13 +4,17 @@
 // created: 2019/8/5 19:33
 // ------------------------------------------------------------------------------
 
+/**
+ * [@mudas/storage] vuex action error
+ * @type {StorageActionError}
+ */
 export default class ActionError extends Error {
 
   /**
    * Vuex Action 错误
-   * @param {String} message
-   * @param {ActionConf} action
-   * @param {State} state
+   * @param {string} message
+   * @param {StorageActionConf} action
+   * @param {StorageState} state
    */
   constructor(message, action, state) {
     super(message);

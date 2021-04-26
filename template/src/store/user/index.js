@@ -4,9 +4,9 @@
 // created: 2020/3/19 13:53
 // ------------------------------------------------------------------------------
 
-import * as utils from '@mudas/util-store';
+import { merge } from '@mudas/store';
 import LoginInfo from './login';
 
-export default utils.mergeStore([
+export default merge([
   LoginInfo
 ]);

@@ -6,74 +6,45 @@
 
 import Vue from 'vue';
 import * as Types from '@/store/types';
+import EasyStore, { namespace, increment } from '@mudas/store';
 
-const USER_LOGIN = Types.USER_LOGIN.namespace;
-const USER_LOGINOUT = Types.USER_LOGINOUT.namespace;
+const USER_LOGIN = namespace(Types.USER_LOGIN);
+const USER_LOGINOUT = namespace(Types.USER_LOGINOUT);
 
-const State = {
-  /*
-   登录基础信息
-   {
-   "refresh_token": "string",
-   "token": "string"
-   }
-   */
-  loginfo: null
-};
-
-const Getters = {
-  [USER_LOGIN]: state => state.loginfo
-};
-
-// 同步立即更新
-const MutAtions = {
-  /**
-   * 登录成功基础信息
-   * @param state
-   * @param {LoginInfo} loginfo
-   */
-  [USER_LOGIN](state, loginfo) {
-    state.loginfo = loginfo;
+const Config = [
+  {
+    type: USER_LOGIN,
+    action(context, params, conf) {
+      return Vue.http.post('/v2/user-system/login/login', { ...params }, conf)
+                .then(({ data }) => {
+                  // 登录成功
+                  if (data.data.token) {
+                    context.commit(USER_LOGIN, data.data);
+                    return Promise.resolve(data.data);
+                  }
+                  // 登录失败
+                  return Promise.reject(new Error(data['sub_msg'] || data.msg));
+                })
+                .catch(reason => Promise.reject(reason));
+    },
+    mutation(state, data) {
+      increment(state[USER_LOGIN], data);
+      Vue.storage.cache(Types.USER_LOGIN, state[USER_LOGIN]);
+      // Vue.storage.cache('token', state[USER_LOGIN]);
+    }
   },
 
-  // 退出登录
-  [USER_LOGINOUT](state) {
-    // loginfo
-    state.loginfo = null;
-    // 缓存销毁
-    Vue.storage.remove(Types.USER_LOGIN);
+  {
+    type: USER_LOGINOUT,
+    url: { url: '/index/getUserInfo', http: Vue.http, method: 'get' },
+    state: false,
+    getter: false,
+    mutation(state, data) {
+      console.warn('USER_LOGINOUT:', data);
+      state[USER_LOGIN] = null;
+      Vue.storage.remove(Types.USER_LOGIN);
+    }
   }
+];
 
-};
-
-// 异步请求数据
-const Actions = {
-
-  // Step01：登录
-  [USER_LOGIN](context, params) {
-    return Vue.http.post('url', params).then(({ data }) => {
-      // 登录成功
-      if (data.data.token) {
-        context.commit(USER_LOGIN, data.data);
-        return Promise.resolve(data.data);
-      }
-      // 登录失败
-      return Promise.reject(new Error(data['sub_msg'] || data.msg));
-    }).catch(reason => Promise.reject(reason));
-  },
-
-  // Step Last：登出
-  [USER_LOGINOUT](context) {
-    return Vue.http.post('url').then(({ data }) => {
-      context.commit(USER_LOGINOUT);
-      return Promise.resolve(data.data);
-    }).catch(reason => Promise.reject(reason));
-  }
-};
-
-export default {
-  state: State,
-  getters: Getters,
-  mutations: MutAtions,
-  actions: Actions
-};
+export default new EasyStore(Config).output();

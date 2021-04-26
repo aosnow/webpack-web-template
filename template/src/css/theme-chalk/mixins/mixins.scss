@@ -1,0 +1,235 @@
+@import "function";
+@import "../common/var";
+
+// Break-points
+// ----------------------------------------
+// 将样式包裹到指定的 $key 适配环境下：	'xs'、'sm'、'md'、'lg'、'xl'
+@mixin res($key, $map: $--breakpoints) {
+  // 循环断点Map，如果存在则返回
+  @if map-has-key($map, $key) {
+    @media only screen and #{inspect(map-get($map, $key))} {
+      @content;
+    }
+  } @else {
+    @warn "Undefeined points: `#{$map}`";
+  }
+}
+
+// Scrollbar
+// ----------------------------------------
+// 设定容器滚动条样式为 IOS 窄条样式
+// $hover - 是否开启自动隐藏滚动条，只有鼠标移入时才显示的效果
+@mixin scroll-bar($hover:false) {
+
+  $thumb-bg-color: if($hover, transparent, $--scrollbar-background-color);
+  $corner-bg-color: if($hover, transparent, $--scrollbar-track-background);
+  $track-bg-color: if($hover, transparent, $--scrollbar-track-background);
+
+  @if ($hover) {
+    &:hover {
+      &::-webkit-scrollbar {
+        &-thumb {
+          background: $--scrollbar-background-color;
+        }
+
+        &-corner {
+          background: $--scrollbar-track-background;
+        }
+
+        &-track {
+          background: $--scrollbar-track-background;
+
+          &-piece {
+            background: $--scrollbar-track-background;
+          }
+        }
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    z-index: 11;
+    width: $--scrollbar-thumb-width;
+
+    &:horizontal {
+      height: $--scrollbar-thumb-width;
+    }
+
+    &-thumb {
+      border-radius: $--scrollbar-thumb-width;
+      width: $--scrollbar-thumb-width;
+      background: $thumb-bg-color;
+
+      &:hover {
+        background: $--scrollbar-hover-background-color;
+      }
+    }
+
+    &-corner {
+      background: $corner-bg-color;
+    }
+
+    &-track {
+      background: $track-bg-color;
+
+      &-piece {
+        background: $track-bg-color;
+        width: $--scrollbar-thumb-width;
+      }
+    }
+  }
+}
+
+/* Placeholder
+ -------------------------- */
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content
+  }
+
+  &::-moz-placeholder {
+    @content
+  }
+
+  &:-ms-input-placeholder {
+    @content
+  }
+}
+
+/* BEM
+ -------------------------- */
+@mixin b($block) {
+  $B: $namespace+'-'+$block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin e($element) {
+  $E: $element !global;
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $element {
+    $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
+  }
+
+  @if hitAllSpecialNestRule($selector) {
+    @at-root {
+      #{$selector} {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$currentSelector} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin m($modifier) {
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+// 在当前父作用域的前提下配置 $modifier
+// ----------------------------------------
+
+// 根据父元素自身生成（后代） configurable-m(test, body) = & $B__body--test{}
+@mixin configurable-m($modifier, $E-flag: false) {
+  $selector: &;
+  $interpolation: '';
+
+  @if $E-flag {
+    $interpolation: $element-separator + $E-flag;
+  }
+
+  @at-root {
+    #{$selector} {
+      .#{$B+$interpolation+$modifier-separator+$modifier} {
+        @content;
+      }
+    }
+  }
+}
+
+// 生成（同级） spec-selector('', header, test) = &$specSelector$B__header--test{}
+// $specSelector 适合用于伪类选择器
+@mixin spec-selector($specSelector: '', $element: $E, $modifier: false, $block: $B) {
+  $modifierCombo: '';
+
+  @if $modifier {
+    $modifierCombo: $modifier-separator + $modifier;
+  }
+
+  @at-root {
+    #{&}#{$specSelector}.#{$block+$element-separator+$element+$modifierCombo} {
+      @content
+    }
+  }
+}
+
+// 生成（后代） meb(test, header) = .block .block__header--test{}
+@mixin meb($modifier: false, $element: $E, $block: $B) {
+  $selector: &;
+  $modifierCombo: '';
+
+  @if $modifier {
+    $modifierCombo: $modifier-separator + $modifier;
+  }
+
+  @at-root {
+    #{$selector} {
+      .#{$block+$element-separator+$element+$modifierCombo} {
+        @content
+      }
+    }
+  }
+}
+
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+// 共享样式
+// ----------------------------------------
+
+// 先 share-rule($name){} 定义，然后使用 extend-rule($name) 来引用
+@mixin extend-rule($name) {
+  @extend #{'%shared-'+$name};
+}
+
+@mixin share-rule($name) {
+  $rule-name: '%shared-'+$name;
+
+  @at-root #{$rule-name} {
+    @content
+  }
+}
+
+// 伪类构造
+// ----------------------------------------
+// 伪类样式快速调用
+@mixin pseudo($pseudo) {
+  @at-root #{&}#{':#{$pseudo}'} {
+    @content
+  }
+}
+

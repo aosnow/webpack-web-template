@@ -3,36 +3,33 @@
 // author: mudas( mschool.tech )
 // created: 2019/11/11
 // ------------------------------------------------------------------------------
-@import "./mixin/mixins";
+@import "./theme-chalk/mixins/mixins";
+
+$--html-font-size: 100px;
 
 html {
-  // 375 以下
-  @include media(xss) {
+  // 768 以下
+  @include res(xs) {
     font-size: $--html-font-size * .875;
   }
 
-  // 375
-  @include media(xs) {
+  // 768、1024
+  @include res(sm) {
     font-size: $--html-font-size;
   }
 
-  // 768
-  @include media(sm) {
+  // 1024+、1280
+  @include res(md) {
     font-size: $--html-font-size;
   }
 
-  // 1024
-  @include media(md) {
-    font-size: $--html-font-size;
-  }
-
-  // 1280
-  @include media(lg) {
+  // 1280+、1440、1600、1920
+  @include res(lg) {
     font-size: $--html-font-size * 1.125;
   }
 
-  // 1920
-  @include media(xl) {
+  // 1920+
+  @include res(xl) {
     font-size: $--html-font-size * 1.25;
   }
 }
@@ -67,7 +64,24 @@ a, .a {
   }
 }
 
+header, .header {
+  padding: $--header-padding;
+}
+
+main, .main {
+  padding: $--main-padding;
+}
+
+footer, .footer {
+  padding: $--footer-padding;
+}
+
+section, .section {
+  padding: $--section-padding;
+}
+
 code, .code {
+  color: $--code-color;
   font-family: $--code-font-family;
   font-size: $--code-font-size;
 }

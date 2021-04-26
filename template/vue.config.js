@@ -6,7 +6,6 @@
 
 const path = require('path');
 const os = require('os');
-const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const terserOptions = require('@vue/cli-service/lib/config/terserOptions');
@@ -18,7 +17,7 @@ function resolve(...dir) {
 }
 
 // externals 排除列表
-const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter', moment: 'moment' };
+const externals = { vue: 'Vue', vuex: 'Vuex', 'vue-router': 'VueRouter', 'element-ui': 'ElementUI' };
 // if (process.env.VUE_APP_ENV === 'release') externals.packageName = 'exportPackageName';
 
 // 配置集合
@@ -73,7 +72,6 @@ const webpackConfig = {
     config.resolve.alias.set('vue$', 'vue/dist/vue.esm.js');
     config.resolve.alias.set('@', resolve('src'));
     config.resolve.alias.set('views', resolve('src', 'views'));
-    config.resolve.alias.set('yinhe-ui', resolve('packages', 'yinhe-ui'));
 
     // 压缩配置（排除配置文件）
     config.optimization.minimizer('terser')

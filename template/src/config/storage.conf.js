@@ -10,14 +10,15 @@ import * as Types from '@/store/types';
 export default [
   // 环境信息
   {
-    type: Types.ENV_INFO,
+    type: Types.ENV_PARAMS,
     storage: StorageType.sessionStorage,
     expire: 0,
-    restore: (store, cacheData) => store.commit(Types.ENV_INFO, cacheData.payload)
+    restore: (store, cacheData, conf) => store.commit(Types.ENV_PARAMS, cacheData.payload)
   },
   {
     type: Types.USER_LOGIN,
-    storage: StorageType.cookie,
-    expire: 0
+    storage: StorageType.sessionStorage,
+    expire: 0,
+    restore: (store, cacheData, conf) => store.commit(Types.USER_LOGIN, cacheData.payload)
   }
 ];
