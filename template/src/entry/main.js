@@ -1,8 +1,7 @@
 import Vue from 'vue';
-
+import ErrorPrint from '@/error/ErrorPrint';
 import Storage from '@mudas/storage';
 import StorageConfig from '@/config/storage.conf';
-import elementUILoader from '@/entry/element';
 
 // ----------------------------------------
 // 基本环境配置
@@ -20,26 +19,29 @@ import router from '@/router';
 // ----------------------------------------
 import '@mudas/reset.css';
 import '@/css/main.scss';
+import '@/css/theme-chalk/index.scss';
 
 // ----------------------------------------
 // 启动入口组件
 // ----------------------------------------
-
 import App from './App.vue';
 
-// Vue.use(El);
-
-Promise.all([
+const ChunkListLoaded = [
   import(/* webpackChunkName: "config" */ '@/config'),
-  import(/* webpackChunkName: "custom-ui" */ './custom-ui'),
-  elementUILoader()
-]).then(chunks => {
+  import(/* webpackChunkName: "custom-ui" */ '@/entry/custom-ui')
+];
+
+// 本地开发启用 node_modules（element-ui v2.15.1），打包环境后直接使用 CDN（element-ui v2.15.1）
+if (process.env.NODE_ENV === 'development') {
+  ChunkListLoaded.push(
+    import(/* webpackChunkName: "element-ui" */ '@/entry/element')
+  );
+}
+
+Promise.all(ChunkListLoaded).then(chunks => {
 
   // 项目配置信息
   Vue.conf = Vue.prototype.$conf = chunks[0];
-
-  // UI 框架
-  // element-ui 和 yinhe-ui 已在加载的同时进行注册
 
   // 初始化 storage
   const storage = new Storage.Store({ unique: process.env.VUE_APP_UNIQUE, config: StorageConfig });
@@ -51,4 +53,5 @@ Promise.all([
     storage,
     render: h => h(App)
   }).$mount('#app');
-});
+
+}).catch(reason => ErrorPrint(reason));

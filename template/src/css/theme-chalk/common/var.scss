@@ -34,6 +34,7 @@ $--color-primary-light-6: mix($--color-white, $--color-primary, 60%) !default; /
 $--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default; /* c6e2ff */
 $--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default; /* d9ecff */
 $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /* ecf5ff */
+
 /// color|1|Functional Color|1
 $--color-success: #67c23a !default;
 /// color|1|Functional Color|1
@@ -52,22 +53,28 @@ $--color-success-lighter: mix($--color-white, $--color-success, 90%) !default;
 $--color-warning-lighter: mix($--color-white, $--color-warning, 90%) !default;
 $--color-danger-lighter: mix($--color-white, $--color-danger, 90%) !default;
 $--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
-/// color|1|Font Color|2
-$--color-text-primary: #303133 !default;
-/// color|1|Font Color|2
-$--color-text-regular: #606266 !default;
-/// color|1|Font Color|2
-$--color-text-secondary: #909399 !default;
-/// color|1|Font Color|2
-$--color-text-placeholder: #c0c4cc !default;
-/// color|1|Border Color|3
-$--border-color-base: #dcdfe6 !default;
-/// color|1|Border Color|3
-$--border-color-light: #e4e7ed !default;
-/// color|1|Border Color|3
-$--border-color-lighter: #ebeef5 !default;
-/// color|1|Border Color|3
-$--border-color-extra-light: #f2f6fc !default;
+
+// NeutralColor
+$--color-neutral-1: #303133 !default;
+$--color-neutral-2: #606266 !default;
+$--color-neutral-3: #909399 !default;
+$--color-neutral-4: #c0c4cc !default;
+$--color-neutral-5: #dcdfe6 !default;
+$--color-neutral-6: #e4e7ed !default;
+$--color-neutral-7: #ebeef5 !default;
+$--color-neutral-8: #f2f6fc !default;
+
+/// Text
+$--color-text-primary: $--color-neutral-1 !default;
+$--color-text-regular: $--color-neutral-2 !default;
+$--color-text-secondary: $--color-neutral-3 !default;
+$--color-text-placeholder: $--color-neutral-4 !default;
+
+/// Border
+$--border-color-base: $--color-neutral-5 !default;
+$--border-color-light: $--color-neutral-6 !default;
+$--border-color-lighter: $--color-neutral-7 !default;
+$--border-color-extra-light: $--color-neutral-8 !default;
 
 // Margin
 // ----------------------------------------
@@ -155,9 +162,9 @@ $--font-weight-bold: 550 !default;
 /// fontWeight|1|Font Weight|1
 $--font-weight-secondary: 100 !default;
 /// fontLineHeight|1|Line Height|2
-$--font-line-height-primary: 24px !default;
+$--font-line-height-primary: 1.6 !default;
 /// fontLineHeight|1|Line Height|2
-$--font-line-height-secondary: 16px !default;
+$--font-line-height-secondary: 1.2 !default;
 $--font-color-disabled-base: #bbb !default;
 /* Size
 -------------------------- */
@@ -1016,6 +1023,8 @@ $--md: 1024px !default;
 $--lg: 1280px !default;
 /// huge  1920px 高清1080P（大型游戏液晶屏）
 $--xl: 1920px !default;
+/// 4k 3840/4096（4K高清液晶屏）
+$--xls: 3840px !default;
 
 /// Breakpoints Map
 $--breakpoints: (
@@ -1023,7 +1032,8 @@ $--breakpoints: (
   'sm' : (min-width: $--sm),
   'md' : (min-width: $--md),
   'lg' : (min-width: $--lg),
-  'xl' : (min-width: $--xl)
+  'xl' : (min-width: $--xl),
+  '4k' : (min-width: $--xls)
 );
 
 /// Display Breakpoints Map
@@ -1038,5 +1048,8 @@ $--breakpoints-spec: (
   'lg-and-up' : (min-width: $--lg), /// 当视口在 lg 及以上尺寸时隐藏
   'lg-only': "(min-width: #{$--lg}) and (max-width: #{$--xl - 1})", /// 当视口在 lg 尺寸时隐藏
   'lg-and-down': (max-width: $--xl - 1), /// 当视口在 lg 及以下尺寸时隐藏
-  'xl-only' : (min-width: $--xl), /// 当视口在 xl 尺寸时隐藏
+  'xl-and-up' : (min-width: $--xl), /// 当视口在 lg 及以上尺寸时隐藏
+  'xl-only': "(min-width: #{$--xl}) and (max-width: #{$--xls - 1})", /// 当视口在 lg 尺寸时隐藏
+  'xl-and-down': (max-width: $--xls - 1), /// 当视口在 lg 及以下尺寸时隐藏
+  '4k-only' : (min-width: $--xls) /// 当视口在 4k 尺寸时隐藏
 );

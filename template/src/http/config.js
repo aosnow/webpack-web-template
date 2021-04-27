@@ -24,7 +24,7 @@ export default {
       /**
        * 平台识别编码
        */
-      invoke_source: 0,
+      invokeSource: 0,
 
       /**
        * `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。

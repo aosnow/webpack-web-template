@@ -6,8 +6,10 @@
 
 import ServiceError from './ServiceError';
 import ActionError from './ActionError';
+import ErrorPrint from './ErrorPrint';
 
 export {
   ServiceError,
-  ActionError
+  ActionError,
+  ErrorPrint
 };

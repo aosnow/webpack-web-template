@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/css/var";
+@import "~@/css/base";
 
 .homepage {
   padding: $--padding-base;
