@@ -1033,7 +1033,7 @@ $--breakpoints: (
   'md' : (min-width: $--md),
   'lg' : (min-width: $--lg),
   'xl' : (min-width: $--xl),
-  '4k' : (min-width: $--xls)
+  'xls' : (min-width: $--xls)
 );
 
 /// Display Breakpoints Map
@@ -1051,5 +1051,5 @@ $--breakpoints-spec: (
   'xl-and-up' : (min-width: $--xl), /// 当视口在 lg 及以上尺寸时隐藏
   'xl-only': "(min-width: #{$--xl}) and (max-width: #{$--xls - 1})", /// 当视口在 lg 尺寸时隐藏
   'xl-and-down': (max-width: $--xls - 1), /// 当视口在 lg 及以下尺寸时隐藏
-  '4k-only' : (min-width: $--xls) /// 当视口在 4k 尺寸时隐藏
+  'xls-only' : (min-width: $--xls) /// 当视口在 4k 尺寸时隐藏
 );
